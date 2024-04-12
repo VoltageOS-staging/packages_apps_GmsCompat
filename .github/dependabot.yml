@@ -4,9 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: daily
-    target-branch: "13"
+    target-branch: "14"
   - package-ecosystem: gradle
     directory: "/config-holder"
     schedule:
       interval: daily
-    target-branch: "13"
+    target-branch: "14"
