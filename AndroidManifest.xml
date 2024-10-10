@@ -21,6 +21,17 @@
 
     <uses-permission android:name="${applicationId}.SIGNATURE_PROTECTED_PERMISSION" />
 
+    <!-- These permissions are normally declared in GSF and GmsCore. They were moved here because
+    of an issue with permissions that have "normal" protectionLevel. If the app that declares a
+    "normal" permission is installed after an app that requests that permission, the permission will
+    not be granted. GmsCompat app is a preinstalled app, it's always present. -->
+    <permission
+        android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="com.google.android.c2dm.permission.RECEIVE"
+        android:protectionLevel="normal" />
+
     <application
         android:name=".App"
         android:label="@string/app_name"
