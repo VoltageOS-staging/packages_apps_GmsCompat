@@ -96,10 +96,6 @@ public class PersistentFgService extends Service {
             boolean res;
             if (GmsInfo.PACKAGE_GMS_CORE.equals(pkg)) {
                 res = bindGmsCore();
-            } else if (GmsInfo.PACKAGE_GSF.equals(pkg)) {
-                // GSF doesn't need to be bound, but needs GmsCompatApp process to remain running to
-                // be able to use its exported binder
-                res = true;
             } else if (GmsCompat.canBeEnabledFor(pkg)) {
                 res = bind(pkg, GmsCompatClientService.class.getName());
             } else {
