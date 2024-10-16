@@ -158,6 +158,7 @@ public class GmsCompatConfigParser {
                     section2Type = SECTION_FLAGS;
                     break;
                 case "stubs":
+                case "stubs_15+":
                     section2Type = SECTION_STUBS;
                     break;
                 case "versionMap":
