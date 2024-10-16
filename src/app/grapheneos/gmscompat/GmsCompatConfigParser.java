@@ -38,7 +38,7 @@ import java.util.zip.ZipFile;
 public class GmsCompatConfigParser {
     private static final String TAG = "GmsCompatConfigParser";
 
-    private final boolean strict = false;
+    private final boolean strict = Build.isDebuggable() && Build.VERSION.SDK_INT >= 33;
     private boolean invalid;
 
     private GmsCompatConfigParser() {}
