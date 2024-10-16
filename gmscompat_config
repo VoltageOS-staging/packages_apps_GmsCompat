@@ -110,21 +110,21 @@ getName nullString
 getAddress String 02:00:00:00:00:00
 listenUsingInsecureL2capChannel throw java.io.IOException
 getProfileProxy false
-registerBluetoothConnectionCallback void
-unregisterBluetoothConnectionCallback void
+registerBluetoothConnectionCallback default
+unregisterBluetoothConnectionCallback default
 
 [android.bluetooth.BluetoothDevice]
-getIdentityAddress nullString
-getMetadata nullArray
-setMetadata false
-setPairingConfirmation false
-setSilenceMode false
+getIdentityAddress default
+getMetadata default
+setMetadata default
+setPairingConfirmation default
+setSilenceMode default
 
 [android.bluetooth.BluetoothManager]
-openGattServer void
+openGattServer default
 
 [android.bluetooth.le.BluetoothLeAdvertiser]
-startAdvertisingSet void
+startAdvertisingSet default
 
 [android.content.ContentResolver]
 registerContentObserver void
