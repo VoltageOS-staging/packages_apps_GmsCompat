@@ -1,8 +1,6 @@
 package app.grapheneos.gmscompat.location
 
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.location.Location
 import android.location.LocationManager
 import android.os.CancellationSignal
@@ -10,7 +8,6 @@ import android.os.RemoteException
 import androidx.annotation.Keep
 import app.grapheneos.gmscompat.BinderDefSupplier
 import app.grapheneos.gmscompat.logd
-import com.android.internal.gmscompat.GmsCompatApp
 import com.google.android.gms.common.api.CommonStatusCodes
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.common.api.internal.IStatusCallback
@@ -22,15 +19,12 @@ import com.google.android.gms.location.LastLocationRequest
 import com.google.android.gms.location.LocationAvailability
 import com.google.android.gms.location.LocationAvailabilityRequest
 import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationSettingsRequest
-import com.google.android.gms.location.LocationSettingsResult
-import com.google.android.gms.location.LocationSettingsStates
 import com.google.android.gms.location.internal.FusedLocationProviderResult
+import com.google.android.gms.location.internal.IBooleanStatusCallback
 import com.google.android.gms.location.internal.IFusedLocationProviderCallback
 import com.google.android.gms.location.internal.IGoogleLocationManagerService
 import com.google.android.gms.location.internal.ILocationAvailabilityStatusCallback
 import com.google.android.gms.location.internal.ILocationStatusCallback
-import com.google.android.gms.location.internal.ISettingsCallbacks
 import com.google.android.gms.location.internal.LocationReceiver
 import com.google.android.gms.location.internal.LocationRequestUpdateData
 import java.util.concurrent.Executors
@@ -271,6 +265,12 @@ class GLocationService(val ctx: Context) : IGoogleLocationManagerService.Stub() 
         callback.onResult(Status.SUCCESS, res)
     }
 
+    // https://developers.google.com/android/reference/com/google/android/gms/location/SettingsClient#public-abstract-taskboolean-isgooglelocationaccuracyenabled
+    override fun isGoogleLocationAccuracyEnabled(callback: IBooleanStatusCallback) {
+        logd{}
+        callback.onResult(Status.SUCCESS, true)
+    }
+
     class BinderDef : BinderDefSupplier(IGoogleLocationManagerService.DESCRIPTOR, GLocationService::class) {
 
         override fun transactionCodes(callerPkg: String) = intArrayOf(
@@ -290,6 +290,7 @@ class GLocationService(val ctx: Context) : IGoogleLocationManagerService.Stub() 
             /* unregisterLocationReceiver */ 89,
             /* getCurrentLocation */ 87,
             /* getCurrentLocation2 */ 92,
+            /* isGoogleLocationAccuracyEnabled */ 95,
         )
     }
 }

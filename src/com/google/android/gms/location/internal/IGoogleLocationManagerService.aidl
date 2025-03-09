@@ -14,6 +14,7 @@ import com.google.android.gms.location.LocationAvailabilityRequest;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.ILocationListener;
+import com.google.android.gms.location.internal.IBooleanStatusCallback;
 import com.google.android.gms.location.internal.IFusedLocationProviderCallback;
 import com.google.android.gms.location.internal.ILocationStatusCallback;
 import com.google.android.gms.location.internal.ISettingsCallbacks;
@@ -39,4 +40,6 @@ interface IGoogleLocationManagerService {
 
     ICancelToken getCurrentLocation(in CurrentLocationRequest request, ILocationStatusCallback callback) = 86;
     ICancelToken getCurrentLocation2(in CurrentLocationRequest request, in LocationReceiver receiver) = 91;
+
+    void isGoogleLocationAccuracyEnabled(IBooleanStatusCallback callback) = 94;
 }
