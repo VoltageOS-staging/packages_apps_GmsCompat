@@ -1,33 +1,39 @@
 package com.google.android.gms.location;
 
+import android.app.appsearch.safeparcel.AbstractSafeParcelable;
+import android.app.appsearch.safeparcel.SafeParcelable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import app.grapheneos.gmscompat.safeparcel.Property;
-import app.grapheneos.gmscompat.safeparcel.SafeParcel;
-import app.grapheneos.gmscompat.safeparcel.SpWriteOnly;
-
 // https://developers.google.com/android/reference/com/google/android/gms/location/LocationSettingsStates
-public class LocationSettingsStates extends SpWriteOnly {
-    @Property(1) public boolean gpsUsable;
-    @Property(2) public boolean networkLocationUsable;
-    @Property(3) public boolean bleUsable;
-    @Property(4) public boolean gpsPresent;
-    @Property(5) public boolean networkLocationPresent;
-    @Property(6) public boolean blePresent;
+@SafeParcelable.Class(creator = "LocationSettingsStatesCreator")
+public class LocationSettingsStates extends AbstractSafeParcelable {
+    @Field(id = 1) public boolean gpsUsable;
+    @Field(id = 2) public boolean networkLocationUsable;
+    @Field(id = 3) public boolean bleUsable;
+    @Field(id = 4) public boolean gpsPresent;
+    @Field(id = 5) public boolean networkLocationPresent;
+    @Field(id = 6) public boolean blePresent;
 
-// SafeParcel code block generated with Spoon | START
-    public void writeToParcel(Parcel p, int wtpFlags) {
-        final int headerEnd = SafeParcel.beginObjectHeader(p);
-        SafeParcel.writeBoolean(1, this.gpsUsable, p);
-        SafeParcel.writeBoolean(2, this.networkLocationUsable, p);
-        SafeParcel.writeBoolean(3, this.bleUsable, p);
-        SafeParcel.writeBoolean(4, this.gpsPresent, p);
-        SafeParcel.writeBoolean(5, this.networkLocationPresent, p);
-        SafeParcel.writeBoolean(6, this.blePresent, p);
-        SafeParcel.completeObjectHeader(headerEnd, p);
+    public LocationSettingsStates() {}
+
+    @Constructor
+    public LocationSettingsStates(@Param(id = 1) boolean gpsUsable,
+            @Param(id = 2) boolean networkLocationUsable,
+            @Param(id = 3) boolean bleUsable, @Param(id = 4) boolean gpsPresent,
+            @Param(id = 5) boolean networkLocationPresent, @Param(id = 6) boolean blePresent) {
+        this.gpsUsable = gpsUsable;
+        this.networkLocationUsable = networkLocationUsable;
+        this.bleUsable = bleUsable;
+        this.gpsPresent = gpsPresent;
+        this.networkLocationPresent = networkLocationPresent;
+        this.blePresent = blePresent;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        LocationSettingsStatesCreator.writeToParcel(this, dest, flags);
     }
     
     public static final Parcelable.Creator<LocationSettingsStates> CREATOR = null;
-// SafeParcel code block generated with Spoon | END
 }

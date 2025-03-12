@@ -1,34 +1,35 @@
 package com.google.android.gms.location;
 
+import android.app.appsearch.safeparcel.AbstractSafeParcelable;
+import android.app.appsearch.safeparcel.SafeParcelable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import app.grapheneos.gmscompat.safeparcel.Property;
-import app.grapheneos.gmscompat.safeparcel.SafeParcel;
-import app.grapheneos.gmscompat.safeparcel.SpWriteOnly;
-
 // https://developers.google.com/android/reference/com/google/android/gms/location/LocationAvailability
-public class LocationAvailability extends SpWriteOnly {
-
+@SafeParcelable.Class(creator = "LocationAvailabilityCreator")
+public class LocationAvailability extends AbstractSafeParcelable {
     /*
     @Deprecated
-    @Property(1) public int cellStatus;
+    @Field(id = 1) public int cellStatus;
     @Deprecated
-    @Property(2) public int wifiStatus;
-    @Property(3) public long elapsedRealtimeNs;
+    @Field(id = 2) public int wifiStatus;
+    @Field(id = 3) public long elapsedRealtimeNs;
      */
-    @Property(4) public int locationStatus;
-    // @Deprecated @Property(5) public NetworkLocationStatus[]
+    @Field(id = 4) public int locationStatus;
+    // @Deprecated @Field(id = 5) public NetworkLocationStatus[]
+    @Field(id = 6) public boolean isAvailable;
 
     private static final int STATUS_AVAILABLE = 0;
     private static final int STATUS_UNAVAILABLE = 1000;
 
-    private LocationAvailability(int status) {
-        locationStatus = status;
+    @Constructor
+    LocationAvailability(@Param(id = 4) int locationStatus, @Param(id = 6) boolean isAvailable) {
+        this.locationStatus = locationStatus;
+        this.isAvailable = isAvailable;
     }
 
-    private static final LocationAvailability AVAILABLE = new LocationAvailability(STATUS_AVAILABLE);
-    private static final LocationAvailability UNAVAILABLE = new LocationAvailability(STATUS_UNAVAILABLE);
+    private static final LocationAvailability AVAILABLE = new LocationAvailability(STATUS_AVAILABLE, true);
+    private static final LocationAvailability UNAVAILABLE = new LocationAvailability(STATUS_UNAVAILABLE, false);
 
     public static LocationAvailability get(boolean available) {
         return available? AVAILABLE : UNAVAILABLE;
@@ -38,13 +39,10 @@ public class LocationAvailability extends SpWriteOnly {
         return locationStatus < STATUS_UNAVAILABLE;
     }
 
-// SafeParcel code block generated with Spoon | START
-    public void writeToParcel(Parcel p, int wtpFlags) {
-        final int headerEnd = SafeParcel.beginObjectHeader(p);
-        SafeParcel.writeInt(4, this.locationStatus, p);
-        SafeParcel.completeObjectHeader(headerEnd, p);
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        LocationAvailabilityCreator.writeToParcel(this, dest, flags);
     }
     
     public static final Parcelable.Creator<LocationAvailability> CREATOR = null;
-// SafeParcel code block generated with Spoon | END
 }

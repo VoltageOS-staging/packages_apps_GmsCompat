@@ -1,15 +1,14 @@
 package com.google.android.gms.location;
 
-import android.os.Parcel;
+import android.app.appsearch.safeparcel.SafeParcelable;
 import android.os.Parcelable;
 
 import app.grapheneos.gmscompat.UtilsKt;
-import app.grapheneos.gmscompat.safeparcel.Property;
-import app.grapheneos.gmscompat.safeparcel.SafeParcel;
-import app.grapheneos.gmscompat.safeparcel.SpReadOnly;
+import com.google.android.gms.RoSafeParcelable;
 
 // https://developers.google.com/android/reference/com/google/android/gms/location/LocationRequest
-public class LocationRequest extends SpReadOnly {
+@SafeParcelable.Class(creator = "LocationRequestCreator")
+public class LocationRequest extends RoSafeParcelable {
     public static final int PRIORITY_BALANCED_POWER_ACCURACY = 102;
     public static final int PRIORITY_HIGH_ACCURACY = 100;
     public static final int PRIORITY_LOW_POWER = 104;
@@ -24,80 +23,48 @@ public class LocationRequest extends SpReadOnly {
     public static final int THROTTLE_ALWAYS = 1;
     public static final int THROTTLE_NEVER = 2;
 
-    @Property(1) public int priority;
-    @Property(2) public long interval;
-    @Property(3) public long minUpdateIntervalMillis;
-    @Property(5) public long expirationTime = Long.MAX_VALUE;
-    @Property(6) public int maxUpdates;
-    @Property(7) public float minUpdateDistanceMeters;
-    @Property(8) public long maxUpdateDelayMillis;
-    @Property(9) public boolean waitForAccurateLocation;
-    @Property(10) public long durationMillis = Long.MAX_VALUE;
-    @Property(12) public int granularity = GRANULARITY_PERMISSION_LEVEL;
+    @Field(id = 1) public int priority;
+    @Field(id = 2) public long interval;
+    @Field(id = 3) public long minUpdateIntervalMillis;
+    @Field(id = 5) public long expirationTime = Long.MAX_VALUE;
+    @Field(id = 6) public int maxUpdates;
+    @Field(id = 7) public float minUpdateDistanceMeters;
+    @Field(id = 8) public long maxUpdateDelayMillis;
+    @Field(id = 9) public boolean waitForAccurateLocation;
+    @Field(id = 10) public long durationMillis = Long.MAX_VALUE;
+    @Field(id = 12) public int granularity = GRANULARITY_PERMISSION_LEVEL;
     /*
     unused for now:
 
-    @Property(11) public long maxUpdateAgeMillis = -1L;
-    @Property(13) public int throttleBehavior;
-    @Property(14) public String moduleId;
-    @Property(15) public boolean bypass;
-    @Property(16) public WorkSource workSource;
+    @Field(id = 11) public long maxUpdateAgeMillis = -1L;
+    @Field(id = 13) public int throttleBehavior;
+    @Field(id = 14) public String moduleId;
+    @Field(id = 15) public boolean bypass;
+    @Field(id = 16) public WorkSource workSource;
      */
+
+    @Constructor
+    public LocationRequest(@Param(id = 1) int priority, @Param(id = 2) long interval,
+            @Param(id = 3) long minUpdateIntervalMillis, @Param(id = 5) long expirationTime,
+            @Param(id = 6) int maxUpdates, @Param(id = 7) float minUpdateDistanceMeters,
+            @Param(id = 8) long maxUpdateDelayMillis, @Param(id = 9) boolean waitForAccurateLocation,
+            @Param(id = 10) long durationMillis, @Param(id = 12) int granularity) {
+        this.priority = priority;
+        this.interval = interval;
+        this.minUpdateIntervalMillis = minUpdateIntervalMillis;
+        this.expirationTime = expirationTime;
+        this.maxUpdates = maxUpdates;
+        this.minUpdateDistanceMeters = minUpdateDistanceMeters;
+        this.maxUpdateDelayMillis = maxUpdateDelayMillis;
+        this.waitForAccurateLocation = waitForAccurateLocation;
+        this.durationMillis = durationMillis;
+        this.granularity = granularity;
+    }
 
     @Override
     public String toString() {
         return UtilsKt.objectToString(this);
     }
 
-// SafeParcel code block generated with Spoon | START
-    public static final Parcelable.Creator<LocationRequest> CREATOR = new Parcelable.Creator<LocationRequest>() {
-        public LocationRequest createFromParcel(Parcel p) {
-            LocationRequest o = new LocationRequest();
-            final int objectEnd = SafeParcel.getObjectEnd(p);
-            while (p.dataPosition() < objectEnd) {
-                int ph = SafeParcel.propHeader(p);
-                switch (SafeParcel.propId(ph)) {
-                    case 1 :
-                        o.priority = SafeParcel.readInt(ph, p);
-                        continue;
-                    case 2 :
-                        o.interval = SafeParcel.readLong(ph, p);
-                        continue;
-                    case 3 :
-                        o.minUpdateIntervalMillis = SafeParcel.readLong(ph, p);
-                        continue;
-                    case 5 :
-                        o.expirationTime = SafeParcel.readLong(ph, p);
-                        continue;
-                    case 6 :
-                        o.maxUpdates = SafeParcel.readInt(ph, p);
-                        continue;
-                    case 7 :
-                        o.minUpdateDistanceMeters = SafeParcel.readFloat(ph, p);
-                        continue;
-                    case 8 :
-                        o.maxUpdateDelayMillis = SafeParcel.readLong(ph, p);
-                        continue;
-                    case 9 :
-                        o.waitForAccurateLocation = SafeParcel.readBoolean(ph, p);
-                        continue;
-                    case 10 :
-                        o.durationMillis = SafeParcel.readLong(ph, p);
-                        continue;
-                    case 12 :
-                        o.granularity = SafeParcel.readInt(ph, p);
-                        continue;
-                    default :
-                        SafeParcel.skipProp(ph, p);
-                }
-            }
-            SafeParcel.checkFullRead(objectEnd, p);
-            return o;
-        }
-
-        public LocationRequest[] newArray(int size) {
-            return new LocationRequest[size];
-        }
-    };
-// SafeParcel code block generated with Spoon | END
+    public static final Parcelable.Creator<LocationRequest> CREATOR = new LocationRequestCreator();
 }

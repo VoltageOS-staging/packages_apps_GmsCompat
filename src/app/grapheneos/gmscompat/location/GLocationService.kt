@@ -4,6 +4,7 @@ import android.content.Context
 import android.location.Location
 import android.location.LocationManager
 import android.os.CancellationSignal
+import android.os.IBinder
 import android.os.RemoteException
 import androidx.annotation.Keep
 import app.grapheneos.gmscompat.BinderDefSupplier
@@ -92,7 +93,7 @@ class GLocationService(val ctx: Context) : IGoogleLocationManagerService.Stub() 
         val client = try {
             Client(this, pendingIntent?.creatorPackage, data.request?.contextAttributionTag)
         } catch (e: SecurityException) {
-            data.fusedLocationProviderCallback?.onFusedLocationProviderResult(
+            data.getFusedLocationProviderCallback()?.onFusedLocationProviderResult(
                 FusedLocationProviderResult(Status(CommonStatusCodes.INTERNAL_ERROR)))
             return
         }
@@ -104,13 +105,13 @@ class GLocationService(val ctx: Context) : IGoogleLocationManagerService.Stub() 
                 key = pendingIntent
                 glf = GlfPendingIntent(pendingIntent)
             } else {
-                val lcallback: ILocationCallback? = data.callback
-                val llistener: ILocationListener? = data.listener
+                val lcallback: ILocationCallback? = data.getCallback()
                 if (lcallback != null) {
                     key = lcallback.asBinder()
                     glf = GlfLocationCallback(lcallback)
                 } else {
-                    key = llistener!!.asBinder()
+                    val llistener: ILocationListener = data.getListener()!!
+                    key = llistener.asBinder()
                     glf = GlfLocationListener(llistener)
                 }
             }
@@ -126,17 +127,16 @@ class GLocationService(val ctx: Context) : IGoogleLocationManagerService.Stub() 
             if (pendingIntent != null) {
                 key = pendingIntent
             } else {
-                val lcallback: ILocationCallback? = data.callback
-                val llistener: ILocationListener? = data.listener
+                val lcallback: IBinder? = data.callback
                 if (lcallback != null) {
-                    key = lcallback.asBinder()
+                    key = lcallback
                 } else {
-                    key = llistener!!.asBinder()
+                    key = data.listener!!
                 }
             }
             removeListener(listeners, key)
         }
-        data.fusedLocationProviderCallback?.onFusedLocationProviderResult(FusedLocationProviderResult.SUCCESS)
+        data.getFusedLocationProviderCallback()?.onFusedLocationProviderResult(FusedLocationProviderResult.SUCCESS)
     }
 
     // https://developers.google.com/android/reference/com/google/android/gms/location/FusedLocationProviderClient#flushLocations()

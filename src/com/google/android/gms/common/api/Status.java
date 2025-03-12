@@ -1,25 +1,30 @@
 package com.google.android.gms.common.api;
 
 import android.app.PendingIntent;
+import android.app.appsearch.safeparcel.AbstractSafeParcelable;
+import android.app.appsearch.safeparcel.SafeParcelable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import app.grapheneos.gmscompat.safeparcel.Property;
-import app.grapheneos.gmscompat.safeparcel.SafeParcel;
-import app.grapheneos.gmscompat.safeparcel.SpWriteOnly;
-
 // https://developers.google.com/android/reference/com/google/android/gms/common/api/Status
-public final class Status extends SpWriteOnly implements Result {
-//    public static final Status INTERNAL_ERROR = new Status(CommonStatusCodes.INTERNAL_ERROR);
-//    public static final Status CANCELED = new Status(CommonStatusCodes.CANCELED);
+@SafeParcelable.Class(creator = "StatusCreator")
+public final class Status extends AbstractSafeParcelable implements Result {
     public static final Status SUCCESS = new Status(CommonStatusCodes.SUCCESS);
 
-    @Property(1) public int statusCode;
-    @Property(2) public String statusMessage;
-    @Property(3) public PendingIntent resolution;
+    @Field(id = 1) public int statusCode;
+    @Field(id = 2) public String statusMessage;
+    @Field(id = 3) public PendingIntent resolution;
+
+    @Constructor
+    public Status(@Param(id = 1) int statusCode, @Param(id = 2) String statusMessage,
+                  @Param(id = 3) PendingIntent resolution) {
+        this.statusCode = statusCode;
+        this.statusMessage = statusMessage;
+        this.resolution = resolution;
+    }
 
     public Status(int statusCode) {
-        this.statusCode = statusCode;
+        this(statusCode, null, null);
     }
 
     @Override
@@ -32,15 +37,10 @@ public final class Status extends SpWriteOnly implements Result {
         return statusCode <= CommonStatusCodes.SUCCESS;
     }
 
-// SafeParcel code block generated with Spoon | START
-    public void writeToParcel(Parcel p, int wtpFlags) {
-        final int headerEnd = SafeParcel.beginObjectHeader(p);
-        SafeParcel.writeInt(1, this.statusCode, p);
-        SafeParcel.writeString(2, this.statusMessage, p);
-        SafeParcel.writeParcelable(3, this.resolution, p, wtpFlags);
-        SafeParcel.completeObjectHeader(headerEnd, p);
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        StatusCreator.writeToParcel(this, dest, flags);
     }
-    
+
     public static final Parcelable.Creator<Status> CREATOR = null;
-// SafeParcel code block generated with Spoon | END
 }
