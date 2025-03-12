@@ -233,7 +233,7 @@ class MainFragment : PreferenceFragmentCompat() {
             // CHANGE_WIFI_STATE permission is always granted (it's a non-runtime permission), but
             // OP_CHANGE_WIFI_STATE app-op, which guards a subset of methods that are also guarded
             // by this permission (eg Wi-Fi scanning), can be revoked by the user
-            val gmsCoreHasChangeWifiStateAppOp = appOpsManager.unsafeCheckOpNoThrow(
+            val gmsCoreHasChangeWifiStateAppOp = appOpsManager.checkOpNoThrow(
                 AppOpsManager.OPSTR_CHANGE_WIFI_STATE, gmsCoreUid,
                     PACKAGE_GMS_CORE) == AppOpsManager.MODE_ALLOWED
 
