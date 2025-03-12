@@ -5,17 +5,25 @@ android_app {
         "src/**/*.java",
         "src/**/*.kt",
         "src/**/*.aidl",
+        ":framework-appsearch-safeparcel-sources",
     ],
     aidl: {
         local_include_dirs: ["src"],
     },
+    plugins: [
+        "safeparcel-annotation-processor",
+    ],
     resource_dirs: [
         "res",
     ],
     static_libs: [
         "androidx.preference_preference",
+        // needed by framework-appsearch-safeparcel-sources
+        "appsearch_flags_java_exported_lib",
         "SettingsLibCollapsingToolbarBaseActivity",
     ],
+    jarjar_rules: "jarjar-rules.txt",
+
     manifest: "AndroidManifest.xml",
 
     required: [
