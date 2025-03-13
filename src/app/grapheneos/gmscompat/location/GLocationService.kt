@@ -273,7 +273,7 @@ class GLocationService(val ctx: Context) : IGoogleLocationManagerService.Stub() 
     }
 
     // https://developers.google.com/android/reference/com/google/android/gms/location/SettingsClient#checkLocationSettings(com.google.android.gms.location.LocationSettingsRequest)
-    override fun requestLocationSettingsDialog(
+    override fun checkLocationSettings(
         settingsRequest: LocationSettingsRequest,
         callback: ISettingsCallbacks,
         packageName: String?
@@ -329,7 +329,7 @@ class GLocationService(val ctx: Context) : IGoogleLocationManagerService.Stub() 
             /* getLastLocation5 */ 90,
             /* getLocationAvailability */ 34,
             /* getLocationAvailability2 */ 91,
-            /* requestLocationSettingsDialog */ 63,
+            /* checkLocationSettings */ 63,
             /* updateLocationRequest */ 59,
             /* flushLocations */ 67,
             /* registerLocationReceiver */ 88,
