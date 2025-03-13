@@ -27,8 +27,9 @@ class OsLocationProvider(val name: String, val properties: ProviderProperties?, 
                     // GmsCore location service doesn't use GNSS for low-power requests
                     LocationManager.NETWORK_PROVIDER
                 } else {
-                    // network location provider + GNSS
-                    LocationManager.FUSED_PROVIDER
+                    // fused provider doesn't use GNSS for low-power requests, i.e. it doesn't
+                    // provide any locations for low-power requests when network location is off
+                    LocationManager.GPS_PROVIDER
                 }
             } else {
                 LocationManager.FUSED_PROVIDER
