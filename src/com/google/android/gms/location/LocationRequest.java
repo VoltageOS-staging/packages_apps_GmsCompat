@@ -2,9 +2,11 @@ package com.google.android.gms.location;
 
 import android.app.appsearch.safeparcel.SafeParcelable;
 import android.os.Parcelable;
+import android.os.WorkSource;
+
+import com.google.android.gms.RoSafeParcelable;
 
 import app.grapheneos.gmscompat.UtilsKt;
-import com.google.android.gms.RoSafeParcelable;
 
 // https://developers.google.com/android/reference/com/google/android/gms/location/LocationRequest
 @SafeParcelable.Class(creator = "LocationRequestCreator")
@@ -32,23 +34,28 @@ public class LocationRequest extends RoSafeParcelable {
     @Field(id = 8) public long maxUpdateDelayMillis;
     @Field(id = 9) public boolean waitForAccurateLocation;
     @Field(id = 10) public long durationMillis = Long.MAX_VALUE;
-    @Field(id = 12) public int granularity = GRANULARITY_PERMISSION_LEVEL;
-    /*
-    unused for now:
-
     @Field(id = 11) public long maxUpdateAgeMillis = -1L;
+    @Field(id = 12) public int granularity = GRANULARITY_PERMISSION_LEVEL;
     @Field(id = 13) public int throttleBehavior;
-    @Field(id = 14) public String moduleId;
     @Field(id = 15) public boolean bypass;
     @Field(id = 16) public WorkSource workSource;
-     */
 
     @Constructor
-    public LocationRequest(@Param(id = 1) int priority, @Param(id = 2) long interval,
-            @Param(id = 3) long minUpdateIntervalMillis, @Param(id = 5) long expirationTime,
-            @Param(id = 6) int maxUpdates, @Param(id = 7) float minUpdateDistanceMeters,
-            @Param(id = 8) long maxUpdateDelayMillis, @Param(id = 9) boolean waitForAccurateLocation,
-            @Param(id = 10) long durationMillis, @Param(id = 12) int granularity) {
+    public LocationRequest(@Param(id = 1) int priority,
+            @Param(id = 2) long interval,
+            @Param(id = 3) long minUpdateIntervalMillis,
+            @Param(id = 5) long expirationTime,
+            @Param(id = 6) int maxUpdates,
+            @Param(id = 7) float minUpdateDistanceMeters,
+            @Param(id = 8) long maxUpdateDelayMillis,
+            @Param(id = 9) boolean waitForAccurateLocation,
+            @Param(id = 10) long durationMillis,
+            @Param(id = 11) long maxUpdateAgeMillis,
+            @Param(id = 12) int granularity,
+            @Param(id = 13) int throttleBehavior,
+            @Param(id = 15) boolean bypass,
+            @Param(id = 16) WorkSource workSource
+    ) {
         this.priority = priority;
         this.interval = interval;
         this.minUpdateIntervalMillis = minUpdateIntervalMillis;
@@ -58,7 +65,11 @@ public class LocationRequest extends RoSafeParcelable {
         this.maxUpdateDelayMillis = maxUpdateDelayMillis;
         this.waitForAccurateLocation = waitForAccurateLocation;
         this.durationMillis = durationMillis;
+        this.maxUpdateAgeMillis = maxUpdateAgeMillis;
         this.granularity = granularity;
+        this.throttleBehavior = throttleBehavior;
+        this.bypass = bypass;
+        this.workSource = workSource;
     }
 
     @Override
