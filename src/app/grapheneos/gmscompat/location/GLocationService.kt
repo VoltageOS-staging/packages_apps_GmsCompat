@@ -281,26 +281,30 @@ class GLocationService(val ctx: Context) : IGoogleLocationManagerService.Stub() 
         logd{"$settingsRequest, packageName $packageName"}
         // GmsCore doesn't check whether caller has a location permission in this case
 
+        val lm = nonClientLocationManager
+        val isLocationEnabled = lm.isLocationEnabled()
+
         val states = LocationSettingsStates().apply {
-            val lm = nonClientLocationManager
             gpsPresent = lm.hasProvider(LocationManager.GPS_PROVIDER)
             gpsUsable = gpsPresent && lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
             networkLocationPresent = lm.hasProvider(LocationManager.NETWORK_PROVIDER)
-            networkLocationUsable = networkLocationPresent && lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+            // don't check whether network provider is actually enabled, some apps expect
+            // networkLocationUsable to be always true when network provider is present and global
+            // location toggle is on
+            networkLocationUsable = networkLocationPresent && isLocationEnabled
         }
 
-        val status = if (states.gpsUsable || states.networkLocationUsable) {
+        val status = if (settingsRequest.requests.isNullOrEmpty() || states.gpsUsable || states.networkLocationUsable) {
             Status.SUCCESS
         } else {
             Status(CommonStatusCodes.RESOLUTION_REQUIRED).apply {
                 val intent = Intent().apply {
                     // StubResolutionActivity is needed for compatibility with apps that expect the
-                    // RESOLUTION_REQUIRED status when global location toggle or network location
-                    // provider is off
+                    // RESOLUTION_REQUIRED status when global location toggle is off
                     setClassName(GmsCompatApp.PKG_NAME, StubResolutionActivity::class.java.name)
                 }
                 resolution = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_IMMUTABLE)
-                statusMessage = "no usable location providers"
+                statusMessage = "RESOLUTION_REQUIRED"
             }
         }
         callback.onLocationSettingsResult(LocationSettingsResult(status, states))
