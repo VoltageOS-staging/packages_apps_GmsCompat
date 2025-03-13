@@ -121,4 +121,6 @@ Update to an unknown version may cause crashes and errors in sandboxed Google Pl
     <string name="sign_in_with_google_notif_ch">Sign in with Google</string>
     <string name="sign_in_with_google_notif_title">Enable Google’s credential service</string>
     <string name="sign_in_with_google_notif_text">“Sign in with Google” requires Google’s credential service to be enabled. Tap to open settings.</string>
+
+    <string name="toast_app_location_access_is_globally_off">Location access is off for all apps</string>
 </resources>

@@ -302,6 +302,9 @@ class GLocationService(val ctx: Context) : IGoogleLocationManagerService.Stub() 
                     // StubResolutionActivity is needed for compatibility with apps that expect the
                     // RESOLUTION_REQUIRED status when global location toggle is off
                     setClassName(GmsCompatApp.PKG_NAME, StubResolutionActivity::class.java.name)
+                    if (!isLocationEnabled) {
+                        setIdentifier(StubResolutionActivity.ID_LOCATION_ACCESS_IS_GLOBALLY_DISABLED)
+                    }
                 }
                 resolution = PendingIntent.getActivity(ctx, 0, intent, PendingIntent.FLAG_IMMUTABLE)
                 statusMessage = "RESOLUTION_REQUIRED"
