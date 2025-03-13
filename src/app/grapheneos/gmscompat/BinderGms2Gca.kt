@@ -554,8 +554,4 @@ object BinderGms2Gca : IGms2Gca.Stub() {
     override fun maybeShowGmsCoreRestrictedBackgroundDataNotif() {
         Notifications.handleGmsCoreRestrictedBackgroundDataNotif()
     }
-
-    override fun isHybridLocationServiceEnabled(): Boolean {
-        return BinderDefs.isEnabled(BinderDefGroup.LOCATION)
-    }
 }
