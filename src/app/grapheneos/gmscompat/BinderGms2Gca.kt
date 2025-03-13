@@ -440,7 +440,23 @@ object BinderGms2Gca : IGms2Gca.Stub() {
         }
     }
 
+    private fun shouldIgnoreCrash(stackTrace: String): Boolean {
+        // Upstream bug: FIDO activity doesn't expect NFC state to change while it's in background.
+        // This crash affects GmsCore UI process while its activity is in the background, which means
+        // that the crashed activity restarts automatically when the user returns to it.
+        val marker1 = "Error receiving broadcast Intent { act=android.nfc.action.ADAPTER_STATE_CHANGED"
+        val marker2 = "Can not perform this action after onSaveInstanceState"
+        val marker3 = "com.google.android.gms.fido.u2f.api.controller.NfcBroadcastReceiver"
+        return stackTrace.contains(marker1) && stackTrace.contains(marker2) && stackTrace.contains(marker3)
+    }
+
     fun showGmsCrashNotification(aer: ApplicationErrorReport) {
+        val stackTrace = aer.crashInfo?.stackTrace
+        if (stackTrace != null && shouldIgnoreCrash(stackTrace)) {
+            Log.d(TAG, "showGmsCrashNotification: ignored $stackTrace")
+            return
+        }
+
         val ctx = App.ctx()
 
         val intent = Intent(Intent.ACTION_APP_ERROR)
