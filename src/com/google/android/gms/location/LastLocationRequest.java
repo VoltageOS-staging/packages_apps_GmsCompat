@@ -8,8 +8,8 @@ import com.google.android.gms.RoSafeParcelable;
 // https://developers.google.com/android/reference/com/google/android/gms/location/LastLocationRequest
 @SafeParcelable.Class(creator = "LastLocationRequestCreator")
 public class LastLocationRequest extends RoSafeParcelable {
-    @Field(id = 1) public long maxAge;
-    @Field(id = 2) public int granularity;
+    @Field(id = 1, defaultValueUnchecked = "Long.MAX_VALUE") public long maxAge;
+    @Field(id = 2, defaultValueUnchecked = "LocationRequest.GRANULARITY_PERMISSION_LEVEL") public int granularity;
 //    @Field(id = 3) public boolean locationSettingsIgnored; // also named "bypass"
 //    @Field(id = 4) public String moduleId;
 //    @Field(id = 5) public ClientIdentity impersonation;

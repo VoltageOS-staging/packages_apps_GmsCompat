@@ -8,10 +8,10 @@ import com.google.android.gms.RoSafeParcelable;
 // https://developers.google.com/android/reference/com/google/android/gms/location/CurrentLocationRequest
 @SafeParcelable.Class(creator = "CurrentLocationRequestCreator")
 public class CurrentLocationRequest extends RoSafeParcelable {
-    @Field(id = 1) public long maxUpdateAgeMillis = 60_000L;
-    @Field(id = 2) public int granularity = LocationRequest.GRANULARITY_PERMISSION_LEVEL;
-    @Field(id = 3) public int priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY;
-    @Field(id = 4) public long durationMillis = Long.MAX_VALUE;
+    @Field(id = 1, defaultValue = "60000") public long maxUpdateAgeMillis;
+    @Field(id = 2, defaultValueUnchecked = "LocationRequest.GRANULARITY_PERMISSION_LEVEL")  public int granularity;
+    @Field(id = 3, defaultValueUnchecked = "LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY") public int priority;
+    @Field(id = 4, defaultValueUnchecked = "Long.MAX_VALUE") public long durationMillis;
 //    @Field(id = 5) public boolean bypass;
 //    @Field(id = 6) public WorkSource workSource;
 //    @Field(id = 7) public int throttleBehavior;

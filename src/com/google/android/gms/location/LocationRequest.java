@@ -28,14 +28,14 @@ public class LocationRequest extends RoSafeParcelable {
     @Field(id = 1) public int priority;
     @Field(id = 2) public long interval;
     @Field(id = 3) public long minUpdateIntervalMillis;
-    @Field(id = 5) public long expirationTime = Long.MAX_VALUE;
+    @Field(id = 5, defaultValueUnchecked = "Long.MAX_VALUE") public long expirationTime;
     @Field(id = 6) public int maxUpdates;
     @Field(id = 7) public float minUpdateDistanceMeters;
     @Field(id = 8) public long maxUpdateDelayMillis;
     @Field(id = 9) public boolean waitForAccurateLocation;
-    @Field(id = 10) public long durationMillis = Long.MAX_VALUE;
-    @Field(id = 11) public long maxUpdateAgeMillis = -1L;
-    @Field(id = 12) public int granularity = GRANULARITY_PERMISSION_LEVEL;
+    @Field(id = 10, defaultValueUnchecked = "Long.MAX_VALUE") public long durationMillis;
+    @Field(id = 11, defaultValue = "-1") public long maxUpdateAgeMillis;
+    @Field(id = 12, defaultValueUnchecked = "LocationRequest.GRANULARITY_PERMISSION_LEVEL") public int granularity;
     @Field(id = 13) public int throttleBehavior;
     @Field(id = 15) public boolean bypass;
     @Field(id = 16) public WorkSource workSource;
