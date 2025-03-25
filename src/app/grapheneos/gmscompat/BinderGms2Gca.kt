@@ -170,8 +170,7 @@ object BinderGms2Gca : IGms2Gca.Stub() {
                 invalidated = true
             } catch (e: Throwable) {
                 // DeadObjectException if GmsCore racily died, or another exception if actual invalidation
-                // failed. This may happen when GSF is being updated, which causes
-                // invalidation of Gservices to throw due to GSF being frozen during update
+                // failed
                 logd{e}
             }
         }

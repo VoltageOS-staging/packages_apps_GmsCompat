@@ -12,7 +12,7 @@ class RpcProvider : AbsContentProvider() {
         val ctx = requireContext()
         return when (Integer.parseInt(whichStr)) {
             GmsCompatApp.RPC_GET_BINDER_IGms2Gca -> {
-                // WRITE_GSERVICES is a signature-protected permission held by GSF, GMS Core and Play Store
+                // WRITE_GSERVICES is a signature-protected permission held by GmsCore and Play Store
                 if (ctx.checkCallingPermission("com.google.android.providers.gsf.permission.WRITE_GSERVICES") != PackageManager.PERMISSION_GRANTED) {
                     if (!GmsCompat.isEnabledFor(getCallingPackage()!!, ctx.userId)) {
                         throw SecurityException()
