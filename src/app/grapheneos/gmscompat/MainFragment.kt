@@ -62,10 +62,9 @@ class MainFragment : PreferenceFragmentCompat() {
 
         screen.addPref().apply {
             title = getString(R.string.google_settings)
-            intent = freshActivity(Intent().setClassName(PACKAGE_GMS_CORE, PACKAGE_GMS_CORE +
-                ".app.settings.GoogleSettingsLink"))
-//                ".app.settings.GoogleSettingsIALink")
-//                ".app.settings.GoogleSettingsActivity")
+            val i = Intent("com.android.settings.action.EXTRA_SETTINGS")
+            i.setPackage(PACKAGE_GMS_CORE)
+            intent = freshActivity(i)
         }
         PreferenceCategory(ctx).apply {
             title = getString(R.string.geolocation)
