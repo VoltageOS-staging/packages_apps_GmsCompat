@@ -101,17 +101,6 @@ public class GmsCompatConfigParser {
             }
         }
         res.version = version;
-        {
-            String key = App.MainProcessPrefs.GMS_PACKAGES_ALLOWED_TO_UPDATE_TO_UNKNOWN_VERSIONS;
-            Set<String> set = App.preferences().getStringSet(key, Collections.emptySet());
-
-            if (set.contains(GmsInfo.PACKAGE_GMS_CORE)) {
-                res.maxGmsCoreVersion = Long.MAX_VALUE;
-            }
-            if (set.contains(GmsInfo.PACKAGE_PLAY_STORE)) {
-                res.maxPlayStoreVersion = Long.MAX_VALUE;
-            }
-        }
         return res;
     }
 
