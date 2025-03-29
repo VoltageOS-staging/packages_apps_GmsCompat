@@ -157,6 +157,9 @@ getMutingExpectedDevice null
 registerMuteAwaitConnectionCallback void
 unregisterMuteAwaitConnectionCallback void
 
+[android.media.MediaRouter2]
+getInstance null
+
 [android.media.session.MediaSessionManager]
 getActiveSessions emptyList
 addOnActiveSessionsChangedListener void
