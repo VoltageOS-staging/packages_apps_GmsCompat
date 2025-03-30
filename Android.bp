@@ -29,19 +29,21 @@ android_app {
     required: [
         "GmsCompatConfig",
         "GmsCompatLib",
-        "default-permissions_app.grapheneos.gmscompat.xml",
-        "whitelist_app.grapheneos.gmscompat.xml",
+        "etc_default-permissions_app.grapheneos.gmscompat.xml",
+        "etc_sysconfig_app.grapheneos.gmscompat.xml",
     ],
 }
 
 prebuilt_etc {
-    name: "whitelist_app.grapheneos.gmscompat.xml",
-    sub_dir: "sysconfig",
-    src: "whitelist_app.grapheneos.gmscompat.xml",
+    name: "etc_default-permissions_app.grapheneos.gmscompat.xml",
+    src: "etc/default-permissions/app.grapheneos.gmscompat.xml",
+    sub_dir: "default-permissions",
+    filename_from_src: true,
 }
 
 prebuilt_etc {
-    name: "default-permissions_app.grapheneos.gmscompat.xml",
-    sub_dir: "default-permissions",
-    src: "default-permissions_app.grapheneos.gmscompat.xml",
+    name: "etc_sysconfig_app.grapheneos.gmscompat.xml",
+    src: "etc/sysconfig/app.grapheneos.gmscompat.xml",
+    sub_dir: "sysconfig",
+    filename_from_src: true,
 }
