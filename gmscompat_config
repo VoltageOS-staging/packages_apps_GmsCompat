@@ -127,8 +127,21 @@ setMetadata default
 setPairingConfirmation default
 setSilenceMode default
 
+[android.bluetooth.BluetoothHapClient]
+registerCallback void
+unregisterCallback void
+
+[android.bluetooth.BluetoothLeAudio]
+registerCallback void
+unregisterCallback void
+
 [android.bluetooth.BluetoothLeBroadcast]
 registerCallback void
+unregisterCallback void
+
+[android.bluetooth.BluetoothLeBroadcastAssistant]
+registerCallback void
+unregisterCallback void
 
 [android.bluetooth.BluetoothManager]
 openGattServer default
