@@ -206,6 +206,11 @@ getUserRestrictionSources emptyList
 [android.safetycenter.SafetyCenterManager]
 isSafetyCenterEnabled false
 
+[android.security.advancedprotection.AdvancedProtectionManager]
+getAdvancedProtectionFeatures emptyList
+setAdvancedProtectionEnabled void
+logDialogShown void
+
 [android.security.keystore.recovery.RecoveryController]
 initRecoveryService void
 
