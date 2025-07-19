@@ -14,7 +14,7 @@ java {
 android {
     namespace = "app.grapheneos.gmscompat.config"
 
-    compileSdk = 35
+    compileSdk = 36
     buildToolsVersion = "36.0.0"
 
     defaultConfig {
