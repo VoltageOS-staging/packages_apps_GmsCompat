@@ -20,7 +20,7 @@ android {
     defaultConfig {
         minSdk = 32
         targetSdk = 36
-        versionCode = 159
+        versionCode = 160
         versionName = versionCode.toString()
     }
 
