@@ -5,8 +5,10 @@ updates:
     schedule:
       interval: daily
     target-branch: "17"
+    open-pull-requests-limit: 20
   - package-ecosystem: gradle
     directory: "/config-holder"
     schedule:
       interval: daily
     target-branch: "17"
+    open-pull-requests-limit: 20
